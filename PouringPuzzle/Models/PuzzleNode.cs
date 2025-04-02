@@ -62,4 +62,39 @@ public class PuzzleNode
 
         return true;
     }
+
+    private List<List<int>> _descendantStates = new();
+    public List<List<int>> DescendantStates {
+        get {
+            if (_descendantStates.Count == 0) { 
+                _descendantStates = CalculateDescendantStates();
+            }
+            return _descendantStates;
+        }
+    }
+
+    private List<List<int>> CalculateDescendantStates() { 
+        var states = new List<List<int>>();
+        
+        for (int i = 0; i < Vessels.Count; i++) {
+            for (int j = 0; j < Vessels.Count; j++) { 
+                if(i == j) {
+                    continue;
+                }
+
+                var pourAmount = Math.Min(Vessels[i].Value, Vessels[j].SpaceAvailable);
+
+                if (pourAmount == 0) {
+                    continue;
+                }
+
+                var newState = new List<int>(VesselValues);
+                newState[i] -= pourAmount;
+                newState[j] += pourAmount;
+                states.Add(newState);
+            }
+        }
+
+        return states;
+    }
 }
