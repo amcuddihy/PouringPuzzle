@@ -1,0 +1,45 @@
+﻿@using PouringPuzzle.ViewModels
+
+@inject PuzzleSetupViewModel ViewModel
+
+<div>
+    <label>Vessels: </label>
+    <input type="number" @bind="ViewModel.VesselCount" />
+</div>
+
+@foreach (var vessel in ViewModel.Vessels) {
+    @if (vessel.IsTapAndDrain) {
+        <div>@vessel.VesselString</div>
+    }
+    else {
+        <div>
+            <label>Vessel | </label>
+            <label>Size: </label>
+            <input type="number" @bind="vessel.Max" />
+            <label>Start: </label>
+            <input type="number" @bind="vessel.Value" />
+        </div>
+    }
+}
+
+<div>
+    <label>"Faucet and Sink" Mode </label>
+    <input type="checkbox" @bind="ViewModel.UseTapAndDrain" />
+</div>
+
+<div>
+    <label>Goal: </label>
+    <input type="number" @bind="ViewModel.Goal"/>
+</div>
+
+<button @onclick="GeneratePuzzle">Generate puzzle!</button>
+
+@code {
+    [Parameter] public EventCallback OnGenerate { get; set; }
+
+    private async Task GeneratePuzzle() {
+        if (OnGenerate.HasDelegate) {
+            await OnGenerate.InvokeAsync();
+        }
+    }
+}

@@ -1,0 +1,81 @@
+﻿@using PouringPuzzle.Models
+@using PouringPuzzle.Services
+@using System.Diagnostics
+@using PouringPuzzle.ViewModels
+@using PouringPuzzle.Components.Setup;
+
+@page "/pouring-puzzle"
+@rendermode InteractiveServer
+
+@inject PuzzleSetupViewModel SetupViewModel;
+@inject PuzzleViewModel GameViewModel;
+
+<PuzzleSetup OnGenerate="GeneratePuzzle" />
+
+<hr/>
+
+@foreach (var node in GameViewModel.Game.NodeList)
+{
+    <p>@node.DebugString</p>
+}
+
+@if (GameViewModel.Game.NodeList.Count > 0) {
+    foreach (var vessel in GameViewModel.Game.CurrentNode.Vessels) {
+        <p>@vessel.VesselString</p>
+    }
+
+    <h5>Move:</h5>
+    <div>
+        <label>From: </label>
+        <input type="number" @bind="GameViewModel.Sender"/>
+
+        <label> To: </label>
+        <input type="number" @bind="GameViewModel.Receiver"/>
+    </div>
+
+    <button @onclick="Pour">Pour</button>
+    <button @onclick="SuggestMove">Suggest Move</button>
+
+    <button @onclick="GetSolution">Display Solution</button>
+    @foreach (var move in GameViewModel.SolutionMoves) {
+        <h6>@move.From => @move.To</h6>
+    }
+}
+
+@if (GameViewModel.ShowVictoryPopup) {
+    <div class="popup-overlay">
+        <div class="popup-box">
+            <h2>You Win!</h2>
+            <p>Congratulations! 🎉</p>
+            <button @onclick="HideVictoryPopup">Close</button>
+        </div>
+    </div>
+}
+
+@code {
+    private void GeneratePuzzle() {
+        GameViewModel.GeneratePuzzle(SetupViewModel.Vessels, SetupViewModel.Goal);
+    }
+
+    private void Pour() {
+        GameViewModel.Pour();
+
+        if (GameViewModel.SolutionMoves.Count > 0) { // TODO: use a bool to show/hide solution, this will allow list to reappear if player moves off goal node
+            GetSolution();             
+        }
+    }
+
+    private void SuggestMove() {
+         // var puzzleMove = PuzzleSolver.GetSuggestedMove(Game.CurrentNode, Game.VesselMaxes)!;
+         // Sender = puzzleMove.From;
+         // Receiver = puzzleMove.To;
+    }
+
+    private void GetSolution() {
+        //SolutionMoves = PuzzleSolver.GetSolution(Game);
+    }
+
+    private void HideVictoryPopup() {
+        GameViewModel.ShowVictoryPopup = false;
+    }
+}
