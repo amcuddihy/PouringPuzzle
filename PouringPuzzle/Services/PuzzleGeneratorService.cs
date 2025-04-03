@@ -23,25 +23,30 @@ public class PuzzleGeneratorService  : IPuzzleGeneratorService
         var nodeList = new List<PuzzleNode>();
         var nodeSearchQueue = new Queue<PuzzleNode>();
 
+        Debug.WriteLine(startNode.DebugString);
+
         nodeList.Add(startNode);
         nodeSearchQueue.Enqueue(startNode);
 
         while (nodeSearchQueue.Count > 0) { 
             var currentNode = nodeSearchQueue.Dequeue();
-            foreach (var descState in currentNode.DescendantStates) { 
+            foreach (var descState in currentNode.DescendantStates) {
                 if (!PuzzleUtils.IsDuplicateState(descState, nodeList)) {
                     var newNode = new PuzzleNode();
                     
                     for (int i = 0; i < descState.Count; i++) {
-                        var vessel = new Vessel
-                        {
-                            Value = descState[i],
-                            Max = currentNode.Vessels[i].Max,
-                            IsTapAndDrain = currentNode.Vessels[i].IsTapAndDrain
-                        };
+                        var vessel = new Vessel();
+                        if (currentNode.Vessels[i].IsTapAndDrain) {
+                            vessel.IsTapAndDrain = true;
+                        }
+                        else {
+                            vessel.Value = descState[i];
+                            vessel.Max = currentNode.Vessels[i].Max;
+                        }
 
                         newNode.Vessels.Add(vessel);
                     }
+                    Debug.WriteLine($"Next Node: {newNode.DebugString}");
 
                     nodeList.Add(newNode);
                     nodeSearchQueue.Enqueue(newNode);

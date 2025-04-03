@@ -30,6 +30,15 @@ public class PuzzleSolverService : IPuzzleSolverService
                 move.From = i;
             }
         }
+
+        if (move.From == -1) {
+            move.From = 0;
+        }
+
+        if (move.To == -1) {
+            move.To = 0;
+        }
+
         return move;
     }
 

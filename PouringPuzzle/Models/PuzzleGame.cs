@@ -37,8 +37,14 @@ public class PuzzleGame
         }
 
         var nextState = new List<int>(CurrentNode.VesselValues);
-        nextState[send] -= pourAmount;
-        nextState[receive] += pourAmount;
+
+        if(!CurrentNode.Vessels[send].IsTapAndDrain) {
+            nextState[send] -= pourAmount;
+        }
+
+        if (!CurrentNode.Vessels[receive].IsTapAndDrain) {
+            nextState[receive] += pourAmount;
+        }
 
         CurrentNode = PuzzleUtils.GetNodeFromListByState(nextState, NodeList);
     }

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 
 namespace PouringPuzzle.Models; 
 
@@ -16,11 +17,14 @@ public class PuzzleNode
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append('[');
             foreach (var vessel in Vessels) {
-                if (vessel == Vessels.Last()) {
-                    stringBuilder.Append(vessel.Value);
+                if (vessel.IsTapAndDrain) {
+                    stringBuilder.Append("Sink");
                 }
                 else {
                     stringBuilder.Append(vessel.Value);
+                }
+
+                if (vessel != Vessels.Last()) {
                     stringBuilder.Append(',');
                 }
             }
@@ -75,7 +79,7 @@ public class PuzzleNode
 
     private List<List<int>> CalculateDescendantStates() { 
         var states = new List<List<int>>();
-        
+    
         for (int i = 0; i < Vessels.Count; i++) {
             for (int j = 0; j < Vessels.Count; j++) { 
                 if(i == j) {
@@ -89,8 +93,15 @@ public class PuzzleNode
                 }
 
                 var newState = new List<int>(VesselValues);
-                newState[i] -= pourAmount;
-                newState[j] += pourAmount;
+
+                if (!Vessels[i].IsTapAndDrain) {
+                    newState[i] -= pourAmount;
+                }
+
+                if (!Vessels[j].IsTapAndDrain) { 
+                    newState[j] += pourAmount;
+                }
+
                 states.Add(newState);
             }
         }
