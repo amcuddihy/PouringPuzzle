@@ -8,9 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// Pouring Puzzle related services
+// Pouring Puzzle services
 builder.Services.AddScoped<IPuzzleGeneratorService, PuzzleGeneratorService>();
-builder.Services.AddScoped<PuzzleSolverService>();
+builder.Services.AddScoped<IPuzzleSolverService, PuzzleSolverService>();
+
+// ViewModels
 builder.Services.AddScoped<PuzzleViewModel>();
 builder.Services.AddScoped<PuzzleSetupViewModel>();
 

@@ -14,7 +14,7 @@ public class PuzzleGeneratorService  : IPuzzleGeneratorService
         var game = new PuzzleGame();
         game.CurrentNode = startingNode;
         game.NodeList = GenerateNodeList(startingNode);
-        //game.Goal = goal;
+        game.Goal = goal;
 
         return game;
     }

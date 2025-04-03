@@ -36,13 +36,11 @@ public class PuzzleGame
             return;
         }
 
-        var nextNode = new PuzzleNode();
-        nextNode.Vessels = CurrentNode.Vessels;
+        var nextState = new List<int>(CurrentNode.VesselValues);
+        nextState[send] -= pourAmount;
+        nextState[receive] += pourAmount;
 
-        nextNode.Vessels[send].Value -= pourAmount;
-        nextNode.Vessels[receive].Value += pourAmount;
-
-        CurrentNode = PuzzleUtils.GetNodeFromListByState(nextNode.VesselValues, NodeList);
+        CurrentNode = PuzzleUtils.GetNodeFromListByState(nextState, NodeList);
     }
 
     public void UpdateNodeDistances() {
@@ -51,46 +49,36 @@ public class PuzzleGame
         }
 
         foreach (PuzzleNode node in NodeList) {
-
-            var isGoalNode = false;
-            foreach (var vessel in node.Vessels) {
-                if (vessel.Value == Goal && vessel.IsTapAndDrain == false) {
-                    isGoalNode = true;
-                    break;
-                }
-            }
-
-            if (isGoalNode) {
+            if (node.IsGoalNode(Goal)) {
+                node.Distance = 0;
                 SetNodeDistancesFromGoal(node);
             }
         }
     }
 
     private void SetNodeDistancesFromGoal(PuzzleNode goalNode) {
-        goalNode.Distance = 0;
+        var distanceSetterQueue = new Queue<PuzzleNode>();
+        distanceSetterQueue.Enqueue(goalNode);
 
-        var distanceSetQueue = new Queue<PuzzleNode>();
-        distanceSetQueue.Enqueue(goalNode);
+        var distanceSetterList = new List<PuzzleNode>();
+        distanceSetterList.Add(goalNode);
 
-        var distanceNodeList = new List<PuzzleNode>();
-
-        while (distanceSetQueue.Count > 0) {
-            var currentNode = distanceSetQueue.Dequeue();
-
+        while (distanceSetterQueue.Count > 0) {
+            var currentNode = distanceSetterQueue.Dequeue();
             foreach (var ancestor in currentNode.AncestorNodes) {
-                if (PuzzleUtils.IsDuplicateState(ancestor.VesselValues, distanceNodeList)) {
+                if (PuzzleUtils.IsDuplicateState(ancestor.VesselValues, distanceSetterList)) {
                     continue;
                 }
 
-                if (ancestor.Distance == -1) { // distance hasn't been set yet
+                if (ancestor.Distance == -1) {
                     ancestor.Distance = currentNode.Distance + 1;
                 }
-                else {
+                else { 
                     ancestor.Distance = Math.Min(ancestor.Distance, currentNode.Distance + 1);
                 }
 
-                distanceNodeList.Add(ancestor);
-                distanceSetQueue.Enqueue(ancestor);
+                distanceSetterQueue.Enqueue(ancestor);
+                distanceSetterList.Add(ancestor);
             }
         }
     }

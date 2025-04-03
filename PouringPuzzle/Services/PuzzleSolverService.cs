@@ -4,44 +4,33 @@ using System.Diagnostics;
 
 namespace PouringPuzzle.Services;
 
-public class PuzzleSolverService 
+public class PuzzleSolverService : IPuzzleSolverService
 {
-    public PuzzleMove? GetSuggestedMove(PuzzleNode currentNode, List<int> maxes) {
-        var bestDescendantNode = new PuzzleNode();
-        foreach (var node in currentNode.DescendantNodes) {
-            if (bestDescendantNode.Distance < 0) {
-                bestDescendantNode = node;
+    public PuzzleMove GetSuggestedMove(PuzzleGame Game) {
+        var currentBestDescendant = new PuzzleNode();
+        foreach (var descendant in Game.CurrentNode.DescendantNodes) {
+            if (currentBestDescendant.Distance == -1) {
+                currentBestDescendant = descendant;
             }
-            else if (bestDescendantNode.Distance > node.Distance) {
-                bestDescendantNode = node;
+            else if (currentBestDescendant.Distance > descendant.Distance) {
+                currentBestDescendant = descendant;
             }
         }
-        return GetMoveFromStates(currentNode.VesselValues, bestDescendantNode.VesselValues, maxes);
+
+        return GetMoveFromStates(Game.CurrentNode.VesselValues, currentBestDescendant.VesselValues);
     }
 
-    private PuzzleMove? GetMoveFromStates(List<int> currentState, List<int> descendantState, List<int> maxes) {
+    private PuzzleMove GetMoveFromStates(List<int> currentState, List<int> descendantState) {
+        var move = new PuzzleMove();
         for (int i = 0; i < currentState.Count; i++) {
-            for (int j = 0; j < currentState.Count; j++) {
-                if (i == j) {
-                    continue;
-                }
-
-                List<int> tempState = new List<int>(currentState);
-                
-                int pourAmount = Math.Min(currentState[i], maxes[j] - currentState[j]);
-                tempState[i] -= pourAmount;
-                tempState[j] += pourAmount;
-
-                if (PuzzleUtils.StatesAreEqual(tempState, descendantState)) {
-                    var move = new PuzzleMove();
-                    move.From = i;
-                    move.To = j;
-
-                    return move;
-                }
+            if(descendantState[i] - currentState[i] > 0) {
+                move.To = i;
+            }
+            else if (descendantState[i] - currentState[i] < 0) {
+                move.From = i;
             }
         }
-        return null;
+        return move;
     }
 
     public List<PuzzleMove> GetSolution(PuzzleGame game) {
@@ -50,7 +39,7 @@ public class PuzzleSolverService
         var startingNode = game.CurrentNode;
 
         while (game.CurrentNode.Distance > 0) {
-            var nextMove = GetSuggestedMove(game.CurrentNode, new List<int>())!; //game.VesselMaxes)!;
+            var nextMove = GetSuggestedMove(game);
             
             moveList.Add(nextMove);
 

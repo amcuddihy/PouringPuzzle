@@ -14,11 +14,6 @@
 
 <hr/>
 
-@foreach (var node in GameViewModel.Game.NodeList)
-{
-    <p>@node.DebugString</p>
-}
-
 @if (GameViewModel.Game.NodeList.Count > 0) {
     foreach (var vessel in GameViewModel.Game.CurrentNode.Vessels) {
         <p>@vessel.VesselString</p>
@@ -60,19 +55,17 @@
     private void Pour() {
         GameViewModel.Pour();
 
-        if (GameViewModel.SolutionMoves.Count > 0) { // TODO: use a bool to show/hide solution, this will allow list to reappear if player moves off goal node
+        if (GameViewModel.SolutionMoves.Count > 0) { //TODO: use a bool to show/hide solution, this will allow list to reappear if player moves off goal node
             GetSolution();             
         }
     }
 
     private void SuggestMove() {
-         // var puzzleMove = PuzzleSolver.GetSuggestedMove(Game.CurrentNode, Game.VesselMaxes)!;
-         // Sender = puzzleMove.From;
-         // Receiver = puzzleMove.To;
+        GameViewModel.SuggestMove();
     }
 
     private void GetSolution() {
-        //SolutionMoves = PuzzleSolver.GetSolution(Game);
+        GameViewModel.ShowSolution();
     }
 
     private void HideVictoryPopup() {

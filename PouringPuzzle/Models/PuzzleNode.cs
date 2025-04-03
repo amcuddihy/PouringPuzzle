@@ -97,4 +97,13 @@ public class PuzzleNode
 
         return states;
     }
+
+    public bool IsGoalNode(int goal) {
+        foreach (var vessel in Vessels) {
+            if (vessel.Value == goal && !vessel.IsTapAndDrain) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
