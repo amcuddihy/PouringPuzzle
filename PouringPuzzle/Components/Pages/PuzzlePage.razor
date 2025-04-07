@@ -13,6 +13,13 @@
 
 <hr/>
 
+<div style="display: flex; flex-direction: row; align-items: flex-end;">
+    @foreach (var vessel in GameViewModel.Vessels)
+    {
+        <VesselComponent VesselModel="vessel"/>
+    }
+</div>
+
 @if (GameViewModel.Game.NodeList.Count > 0) {
     foreach (var vessel in GameViewModel.Game.CurrentNode.Vessels) {
         <p>@vessel.VesselString</p>
@@ -47,6 +54,16 @@
 }
 
 @code {
+    protected override void OnInitialized() {
+        SetupViewModel.SetupChanged += OnSetupChanged;
+        GameViewModel.Vessels = new List<Vessel>(SetupViewModel.Vessels);
+    }
+
+    private void OnSetupChanged() {
+        GameViewModel.Vessels = new List<Vessel>(SetupViewModel.Vessels);
+        StateHasChanged();
+    }
+
     private void GeneratePuzzle() {
         GameViewModel.GeneratePuzzle(SetupViewModel.Vessels, SetupViewModel.Goal);
     }

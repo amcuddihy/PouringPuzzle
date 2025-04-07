@@ -1,9 +1,13 @@
 ﻿using PouringPuzzle.Models;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace PouringPuzzle.ViewModels;
 
 public class PuzzleSetupViewModel 
 {
+    public event Action? SetupChanged;
+
     private const int MIN_VESSEL_COUNT = 3;
     private const int MAX_VESSEL_COUNT = 20;
 
@@ -20,11 +24,18 @@ public class PuzzleSetupViewModel
             _vesselCount = Math.Clamp(value, MIN_VESSEL_COUNT, MAX_VESSEL_COUNT);
 
             while (Vessels.Count < _vesselCount) {
-                Vessels.Add(new Vessel());
+                var vessel = new Vessel();
+                vessel.PropertyChanged += OnVesselPropertyChanged;
+                vessel.Max = 1;
+                Vessels.Add(vessel);
             }
             while (Vessels.Count > _vesselCount) {
-                Vessels.RemoveAt(Vessels.Count - 1);
+                var vessel = Vessels.Last();
+                vessel.PropertyChanged -= OnVesselPropertyChanged;
+                Vessels.Remove(vessel);
             }
+
+            SetupChanged?.Invoke();
         }
     }
 
@@ -39,6 +50,8 @@ public class PuzzleSetupViewModel
             if (Vessels.Count > 0) {
                 Vessels.First().IsTapAndDrain = _useTapAndDrain;
             }
+
+            SetupChanged?.Invoke();
         }
     }
 
@@ -57,23 +70,29 @@ public class PuzzleSetupViewModel
         }
     }
 
+    private void OnVesselPropertyChanged(object? sender, PropertyChangedEventArgs e) {
+        SetupChanged?.Invoke();
+    }
+
     public PuzzleSetupViewModel() {
 
-        Vessels = new List<Vessel>();
-        Vessels.Add(new Vessel
-        {
-            Max = 8,
-            Value = 8
-        });
-        Vessels.Add(new Vessel
-        {
-            Max = 5,
-            Value = 0,
-        });
-        Vessels.Add(new Vessel
-        {
-            Max = 3,
-            Value = 0
-        });
+        Vessels = [
+            new Vessel {
+                Max = 8,
+                Value = 8
+            },
+            new Vessel {
+                Max = 5,
+                Value = 0,
+            },
+            new Vessel {
+                Max = 3,
+                Value = 0
+            },
+        ];
+
+        foreach(var vessel in Vessels) {
+            vessel.PropertyChanged += OnVesselPropertyChanged;
+        }
     }
 }

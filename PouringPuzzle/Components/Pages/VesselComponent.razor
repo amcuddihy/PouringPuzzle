@@ -1,0 +1,38 @@
+﻿@using PouringPuzzle.Models
+@using Microsoft.AspNetCore.Components
+
+
+<div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
+    <!-- Container -->
+    <div style="
+        position: relative;
+        width: 50px;
+        height: @(VesselModel.Max * 10)px;
+        background-color: lightgray;
+        border-left: 2px solid #444;
+        border-right: 2px solid #444;
+        border-bottom: 2px solid #444;
+        border-top: none;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        overflow: hidden;">
+
+        <!-- Water fill -->
+        <div style="
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: @((double)VesselModel.Value / VesselModel.Max * 100)%;
+            background-color: royalblue;
+            transition: height 0.5s ease;">
+        </div>
+    </div>
+
+    <!-- Text -->
+    <div>@($"{VesselModel.Value} / {VesselModel.Max}")</div>
+</div>
+
+@code {
+    [Parameter]
+    public Vessel VesselModel { get; set; } = new Vessel();
+}

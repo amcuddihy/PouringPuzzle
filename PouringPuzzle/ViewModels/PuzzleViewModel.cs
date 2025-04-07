@@ -25,6 +25,8 @@ public class PuzzleViewModel
         }
     }
 
+    public List<Vessel> Vessels { get; set; } = new List<Vessel>();
+
     public bool ShowVictoryPopup { get; set; } = false;
 
     public PuzzleGame Game { get; set; } = new PuzzleGame();
@@ -41,11 +43,13 @@ public class PuzzleViewModel
 
     public void GeneratePuzzle(List<Vessel> vessels, int goal) {
         Game = _puzzleGeneratorService.GeneratePuzzle(vessels, goal);
+        Vessels = Game.CurrentNode.Vessels;
         ShowVictoryPopup = Game.CheckForWin(); // just in case a puzzle starts in a victory state
     }
 
     public void Pour() {
         Game.Pour(Sender, Receiver);
+        Vessels = Game.CurrentNode.Vessels;
         ShowVictoryPopup = Game.CheckForWin();
     }
 

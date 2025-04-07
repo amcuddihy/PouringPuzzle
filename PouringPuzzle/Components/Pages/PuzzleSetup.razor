@@ -35,7 +35,8 @@
 <button @onclick="GeneratePuzzle">Generate puzzle!</button>
 
 @code {
-    [Parameter] public EventCallback OnGenerate { get; set; }
+    [Parameter] 
+    public EventCallback OnGenerate { get; set; }
 
     private async Task GeneratePuzzle() {
         if (OnGenerate.HasDelegate) {

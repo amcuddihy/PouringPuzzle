@@ -1,8 +1,11 @@
-﻿
+﻿using System.ComponentModel;
+
 namespace PouringPuzzle.Models; 
 
-public class Vessel 
+public class Vessel : INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler? PropertyChanged;
+
     private int _value = 0;
     public int Value {
         get {
@@ -16,6 +19,7 @@ public class Vessel
                 _max = value;
             }
             _value = Math.Clamp(value, 0, Max);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
         }
     }
 
@@ -27,6 +31,7 @@ public class Vessel
         set {
             _max = Math.Max(0, value);
             _value = Math.Min(_value, Max);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Max)));
         }
     }
 
@@ -39,7 +44,16 @@ public class Vessel
         }
     }
 
-    public bool IsTapAndDrain { get; set; } = false;
+    private bool _isTapAndDrain = false;
+    public bool IsTapAndDrain {
+        get {
+            return _isTapAndDrain;
+        }
+        set {
+            _isTapAndDrain = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsTapAndDrain))); 
+        }
+    }
 
     public string VesselString {
         get {
