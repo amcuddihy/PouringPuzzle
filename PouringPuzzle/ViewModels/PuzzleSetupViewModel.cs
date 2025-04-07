@@ -67,6 +67,7 @@ public class PuzzleSetupViewModel
             }
 
             _goal = Math.Clamp(value, MIN_GOAL, maxSize);
+            SetupChanged?.Invoke();
         }
     }
 

@@ -33,6 +33,8 @@ public class PuzzleViewModel
 
     public List<PuzzleMove> SolutionMoves { get; set; } = new List<PuzzleMove>();
 
+    public bool PuzzleHasSolution { get; set; } = true;
+
     private IPuzzleGeneratorService _puzzleGeneratorService;
     private IPuzzleSolverService _puzzleSolverService;
 
@@ -44,6 +46,7 @@ public class PuzzleViewModel
     public void GeneratePuzzle(List<Vessel> vessels, int goal) {
         Game = _puzzleGeneratorService.GeneratePuzzle(vessels, goal);
         Vessels = Game.CurrentNode.Vessels;
+        PuzzleHasSolution = Game.GoalNodeExists();
         ShowVictoryPopup = Game.CheckForWin(); // just in case a puzzle starts in a victory state
     }
 

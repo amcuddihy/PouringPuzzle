@@ -17,6 +17,17 @@ public class PuzzleGame
         }
     }
 
+    public bool GoalNodeExists() { 
+        var goalExists = false;
+        foreach(PuzzleNode node in NodeList) {
+            if (node.IsGoalNode(Goal)) {
+                goalExists = true;
+                break;
+            }
+        }
+        return goalExists;
+    }
+
     public List<PuzzleNode> NodeList { get; set; } = new List<PuzzleNode>();
     public PuzzleNode CurrentNode { get; set; } = new PuzzleNode();
 

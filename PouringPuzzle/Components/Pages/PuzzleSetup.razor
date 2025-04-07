@@ -32,15 +32,6 @@
     <input type="number" @bind="ViewModel.Goal"/>
 </div>
 
-<button @onclick="GeneratePuzzle">Generate puzzle!</button>
-
 @code {
-    [Parameter] 
-    public EventCallback OnGenerate { get; set; }
 
-    private async Task GeneratePuzzle() {
-        if (OnGenerate.HasDelegate) {
-            await OnGenerate.InvokeAsync();
-        }
-    }
 }
