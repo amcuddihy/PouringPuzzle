@@ -9,54 +9,74 @@
 @inject PuzzleSetupViewModel SetupViewModel;
 @inject PuzzleViewModel GameViewModel;
 
+<body style="background-color: #f9f9f9;">
+
 <div style="display: flex; flex-direction: column; align-items: center;">
 
-    <div style="display: inline-block; text-align: left; margin: 0 auto;">
+    <div style="background-color: white;
+            border: 1px solid #ccc;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px; 
+            display: inline-block; 
+            text-align: left; 
+            margin: 0 auto;">
         <PuzzleSetup />
     </div>
 
     <div style="width: 40%; height: 2px; background-color: #444; margin: 20px;"></div>
 
-    @if (!GameViewModel.PuzzleHasSolution) {
-        <div style="
-            background-color: #ffe5e5;
-            color: #cc0000;
-            border: 1px solid #cc0000;
-            padding: 6px 12px;
-            border-radius: 4px;
-            margin: 10px 0;
-            font-weight: bold;
-            text-align: center;">
-            ⚠️ This puzzle has no solution.
-        </div>
-    }
+    <div style="background-color: white;
+        border: 1px solid #ccc;
+        padding: 16px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;">
 
-    <div style="display: flex; flex-direction: row; align-items: flex-end;">
-        @foreach (var vessel in GameViewModel.Vessels)
-        {
-            <VesselComponent VesselModel="vessel"/>
+        @if (!GameViewModel.PuzzleHasSolution) {
+            <div style="
+                background-color: #ffe5e5;
+                color: #cc0000;
+                border: 1px solid #cc0000;
+                padding: 6px 12px;
+                border-radius: 4px;
+                margin: 10px 0;
+                font-weight: bold;
+                text-align: center;">
+                ⚠️ This puzzle has no solution.
+            </div>
+        }
+
+        <div style="display: flex; flex-direction: row; align-items: flex-end;">
+            @foreach (var vessel in GameViewModel.Vessels)
+            {
+                <VesselComponent VesselModel="vessel"/>
+            }
+        </div>
+
+        <h5>Move:</h5>
+        <div>
+            <label>From: </label>
+            <input type="number" @bind="GameViewModel.Sender"/>
+
+            <label> To: </label>
+            <input type="number" @bind="GameViewModel.Receiver"/>
+        </div>
+
+        <div style="display: flex; flex-direction: row; gap: 10px; margin: 20px 0">
+            <button @onclick="Pour">Pour</button>
+            <button @onclick="SuggestMove">Suggest Move</button>
+            <button @onclick="GetSolution">Display Solution</button>
+        </div>
+
+        @foreach (var move in GameViewModel.SolutionMoves) {
+            <h6>@move.From => @move.To</h6>
         }
     </div>
-
-    <h5>Move:</h5>
-    <div>
-        <label>From: </label>
-        <input type="number" @bind="GameViewModel.Sender"/>
-
-        <label> To: </label>
-        <input type="number" @bind="GameViewModel.Receiver"/>
-    </div>
-
-    <div style="display: flex; flex-direction: row; gap: 10px;">
-        <button @onclick="Pour">Pour</button>
-        <button @onclick="SuggestMove">Suggest Move</button>
-        <button @onclick="GetSolution">Display Solution</button>
-    </div>
-
-    @foreach (var move in GameViewModel.SolutionMoves) {
-        <h6>@move.From => @move.To</h6>
-    }
-
 </div>
 
 @if (GameViewModel.ShowVictoryPopup) {
@@ -68,6 +88,7 @@
         </div>
     </div>
 }
+</body>
 
 @code {
     protected override void OnInitialized() {
