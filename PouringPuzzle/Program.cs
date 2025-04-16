@@ -16,6 +16,10 @@ builder.Services.AddScoped<IPuzzleSolverService, PuzzleSolverService>();
 builder.Services.AddScoped<PuzzleViewModel>();
 builder.Services.AddScoped<PuzzleSetupViewModel>();
 
+if (!builder.Environment.IsDevelopment()) {
+    builder.WebHost.UseUrls("http://0.0.0.0:5000");
+}
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
