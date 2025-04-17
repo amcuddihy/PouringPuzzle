@@ -53,26 +53,28 @@ Built in C# and .NET 9, this Blazor app uses a breadth-first state space search 
 
 ![Solution Shown](PouringPuzzle/Screenshots/show_solution.png)
 
-Contributing 🤝
+## Contributing 🤝
 
-Contributions are welcome!
+While this is primarily a personal project, feedback and suggestions are welcome!
 
-    Fork this repository
+If you'd like to experiment with changes:
+1. Fork the repository
 
-    Create a feature branch:
+2. Create a feature branch:
+   ```bash
+   git checkout -b my-feature-branch
 
-git checkout -b my-feature-branch
+3. Commit your changes:
+   ```bash
+   git commit -m "Add cool feature"
+   
+4. Push to your branch and open a pull request
 
-Commit your changes:
+## License 📜
 
-    git commit -m "Add cool feature"
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-    Push to your branch and open a pull request!
-
-License 📜
-
-This project is licensed under the MIT License – see the LICENSE file for details.
-Contact 📬
+## Contact 📬
 
 For questions or feedback, feel free to open an issue or reach out through GitHub.
 
