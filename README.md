@@ -1,52 +1,58 @@
-Pouring Puzzle Solver 🧪💧
+# Water Pouring Puzzle Solver 🧪💧
 
-A Blazor web application that lets users experiment with custom water pouring puzzles—like the classic 8-5-3 jug problem. Built in C# and .NET 9, this app computes the optimal solution using a graph-based state traversal algorithm.
-Features 🚀
+An interactive web app for experimenting with and solving water jug puzzles - like the classic 8-5-3 setup that was featured in the "Dispersal Cartridge" puzzle in *Resident Evil 2 (2019)* and the park fountain bomb defusal scene in *Die Hard with a Vengeance*.
 
-    Solve any custom pouring puzzle setup
+Built in C# and .NET 9, this Blazor app uses a breadth-first state space search algorithm to calculate the optimum path to the desired volume. 
 
-    Configure vessel sizes, starting fill levels, and goal amount
+## Features 🚀
 
-    Optional "Faucet and Drain" mode for advanced puzzles
+- Solve any water pouring puzzle - not just the 8-5-3 classic
+- Configure vessel sizes, starting amounts, and goal value
+- Optional **Faucet and Drain** mode for puzzles with an infinite water source
+- Suggest the best possible move for the current puzzle state 
+- Able to display the optimum route to the goal
+- Clean, interactive UI powered by Blazor and two-way data binding
+- Self-hosted on a Raspberry Pi for live testing and deployment experience
 
-    Shows the shortest solution using recursive graph traversal
+## Installation 💻
 
-    Clean UI with Blazor and two-way data binding
+### Prerequisites
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+- Visual Studio 2022 or later (recommended)
 
-    Self-hosted on Raspberry Pi for live testing and deployment practice
+### Installation Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/amcuddihy/PouringPuzzle
 
-Installation 💻
-Prerequisites
+2. Open the project in Visual Studio.
 
-    .NET 9 SDK
+3. Build and run the application.
 
-    Visual Studio 2022 or later (recommended)
+## Usage ⚡
 
-Steps
+1. **Customize your puzzle setup**  
+   - Set the number of vessels, each vessel's maximum capacity, and its starting fill level.  
+   - Optionally, enable **Faucet and Drain mode**, which treats the first vessel as an infinite source and sink.
 
-Clone the repository:
+2. **Set your goal**  
+   - Choose a target amount of water to reach in any one vessel.
 
-git clone https://github.com/amcuddihy/PouringPuzzle
+3. **Run the puzzle**  
+   - The app will automatically compute and display the shortest sequence of pour actions to reach the goal.
+   - You can step through the solution manually using the **"Pour"** button.
 
-Then:
+4. **Experiment freely**  
+   - Change the setup at any time to create new puzzles - the solver updates in real time.
 
-    Open the project in Visual Studio
+## Screenshots 🖼️
 
-    Build and run the application
+![Classic Setup](Screenshots/default_setup.png)
 
-Usage ⚡
+![Custom Setup](Screenshots/custom_setup.png)
 
-    Set up the puzzle using the “Puzzle Setup” tab
+![Solution Shown](Screenshots/show_solution.png)
 
-    Click "Generate Puzzle" to build the graph
-
-    Use "Suggest Move" or "Solve It For Me" to progress through the solution
-
-    Try out Faucet/Drain mode for even more challenge
-
-Screenshots 🖼️
-
-(Coming soon — consider adding a screenshot of the main UI or a GIF of it solving a puzzle)
 Contributing 🤝
 
 Contributions are welcome!
