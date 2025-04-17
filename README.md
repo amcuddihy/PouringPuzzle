@@ -47,13 +47,12 @@ Built in C# and .NET 9, this Blazor app uses a breadth-first state space search 
 
 ## Screenshots 🖼️
 
-![Classic Setup](Screenshots/default_setup.png)
+![Classic Setup](PouringPuzzle/Screenshots/default_setup.png)
 
-![Custom Setup](Screenshots/custom_setup.png)
+![Custom Setup](PouringPuzzle/Screenshots/custom_setup.png)
 
-![Solution Shown](Screenshots/show_solution.png)
+![Solution Shown](PouringPuzzle/Screenshots/show_solution.png)
 
-(Coming soon — consider adding a screenshot of the main UI or a GIF of it solving a puzzle)
 Contributing 🤝
 
 Contributions are welcome!
