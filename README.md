@@ -1,49 +1,32 @@
-# Water Pouring Puzzle Solver 🧪💧
+# Pouring Puzzle Solver
 
-An interactive web app for experimenting with and solving water jug puzzles - like the classic 8-5-3 setup that was featured in the "Dispersal Cartridge" puzzle in *Resident Evil 2 (2019)* and the park fountain bomb defusal scene in *Die Hard with a Vengeance*.
+A web-based interactive solver for the classic *water jug* problem. Users can configure custom vessel sizes and fill levels, then explore the shortest path to reach a target amount by pouring between vessels.
 
-Built in C# and .NET 9, this Blazor app uses a breadth-first state space search algorithm to calculate the optimum path to the desired volume. 
+🌐 **Live Demo:** [https://www.pouringpuzzle.net](https://www.pouringpuzzle.net)
 
-## Features 🚀
+---
 
-- Solve any water pouring puzzle - not just the 8-5-3 classic
-- Configure vessel sizes, starting amounts, and goal value
-- Optional **Faucet and Drain** mode for puzzles with an infinite water source
-- Suggest the best possible move for the current puzzle state 
-- Able to display the optimum route to the goal
-- Clean, interactive UI powered by Blazor and two-way data binding
-- Self-hosted on a Raspberry Pi for live testing and deployment experience
+## 🧠 About the Puzzle
 
-## Installation 💻
+The "pouring puzzle" (also called the **water jug problem**) is a logic challenge involving a set of containers with fixed sizes. The goal is to measure out a specific volume using only a series of pours between the containers.
 
-### Prerequisites
-- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
-- Visual Studio 2022 or later (recommended)
+This puzzle has appeared in several well-known media:
 
-### Installation Steps
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/amcuddihy/PouringPuzzle
+- 🧪 **Resident Evil 2 Remake** – The *Herbicide Mixing Puzzle* in the greenhouse uses this exact logic with 8, 5, and 3 unit vessels.
+- 💣 **Die Hard with a Vengeance** – In the *fountain scene*, Bruce Willis and Samuel L. Jackson solve the 5- and 3-gallon jug puzzle to defuse a bomb.
 
-2. Open the project in Visual Studio.
+---
 
-3. Build and run the application.
+## 🧰 Features
 
-## Usage ⚡
+- 🔁 **Shortest-path solver** using recursive graph traversal and reverse node linking
+- 🧮 **Custom puzzle setup**: choose any number of vessels, define their capacities and starting amounts
+- 🖥️ **Blazor-based frontend** with responsive UI and real-time updates via two-way data binding
+- 🧩 **Visual step-by-step guidance** through the puzzle graph
+- 🌐 **Hosted on Azure App Service** with custom domain and HTTPS
+- 🔄 **GitHub Actions CI/CD** for automatic deployment
 
-1. **Customize your puzzle setup**  
-   - Set the number of vessels, each vessel's maximum capacity, and its starting fill level.  
-   - Optionally, enable **Faucet and Drain mode**, which treats the first vessel as an infinite source and sink.
-
-2. **Set your goal**  
-   - Choose a target amount of water to reach in any one vessel.
-
-3. **Run the puzzle**  
-   - The app will automatically compute and display the shortest sequence of pour actions to reach the goal.
-   - You can step through the solution manually using the **"Pour"** button.
-
-4. **Experiment freely**  
-   - Change the setup at any time to create new puzzles - the solver updates in real time.
+---
 
 ## Screenshots 🖼️
 
