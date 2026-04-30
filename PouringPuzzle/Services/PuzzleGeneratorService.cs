@@ -16,6 +16,11 @@ public class PuzzleGeneratorService  : IPuzzleGeneratorService
         game.NodeList = GenerateNodeList(startingNode);
         game.Goal = goal;
 
+        foreach (var node in game.NodeList) {
+            Debug.WriteLine(node.DebugString);
+        }
+        Debug.WriteLine($"Total Nodes: {game.NodeList.Count}");
+
         return game;
     }
 
@@ -46,7 +51,6 @@ public class PuzzleGeneratorService  : IPuzzleGeneratorService
 
                         newNode.Vessels.Add(vessel);
                     }
-                    Debug.WriteLine($"Next Node: {newNode.DebugString}");
 
                     nodeList.Add(newNode);
                     nodeSearchQueue.Enqueue(newNode);
@@ -57,7 +61,6 @@ public class PuzzleGeneratorService  : IPuzzleGeneratorService
                 currentNode.DescendantNodes.Add(descNode);
             }
         }
-
         return nodeList;
     }
 
