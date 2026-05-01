@@ -6,13 +6,13 @@
 @page "/"
 @rendermode InteractiveServer
 
-@inject PuzzleSetupViewModel SetupViewModel;
-@inject PuzzleViewModel GameViewModel;
+@inject PuzzleViewModel ViewModel;
 
 @* <body style="background-color: #f9f9f9;"> *@
 
 <div style="display: flex; flex-direction: column; align-items: center;"> 
 
+    <!-- Puzzle Setup Div -->
     <div style="background-color: white;
             border: 1px solid #ccc;
             padding: 16px;
@@ -22,11 +22,46 @@
             display: inline-block; 
             text-align: left; 
             margin: 0 auto;">
-        <PuzzleSetup />
+        <div>
+            <label>Vessels: </label>
+            <input type="number" @bind="ViewModel.VesselCount" />
+        </div>
+
+        @for (int i = 0; i < ViewModel.VesselCount; i++) 
+        {
+            var index = i; // Capture the current value of i for use in the data binding
+
+            @if (i == 0 && ViewModel.UseTapAndDrain) 
+            {
+                <div>Faucet and Sink</div>
+            }
+            else 
+            {
+                <div>
+                    <label>Vessel | </label>
+                    <label>Size: </label>
+                    <input type="number" @bind="ViewModel.MaxValues[index]" />
+                    <label>Start: </label>
+                    <input type="number" @bind="ViewModel.StartingValues[index]" />
+                </div>
+            }
+        }
+
+        <div>
+            <label>"Faucet and Sink" Mode </label>
+            <input type="checkbox" @bind="ViewModel.UseTapAndDrain" />
+        </div>
+
+        <div>
+            <label>Goal: </label>
+            <input type="number" @bind="ViewModel.Goal" />
+        </div>
     </div>
 
+    <!-- Divider -->
     <div style="width: 40%; height: 2px; background-color: #444; margin: 20px 0;"></div>
      
+    <!-- Puzzle Play Div -->
     <div style="background-color: white;
         border: 1px solid #ccc;
         padding: 16px;
@@ -37,7 +72,7 @@
         flex-direction: column;
         align-items: center;">
 
-        @if (!GameViewModel.PuzzleHasSolution) {
+        @if (!ViewModel.PuzzleHasSolution) {
             <div style="
                 background-color: #ffe5e5;
                 color: #cc0000;
@@ -52,39 +87,36 @@
         }
 
         <div style="display: flex; flex-direction: row; align-items: flex-end;">
-            @foreach (var vessel in GameViewModel.Vessels)
+            @for (int i = 0; i < ViewModel.VesselCount; i++)
             {
-                <VesselComponent VesselModel="vessel"/>
+                <VesselComponent 
+                    MaxValue="ViewModel.MaxValues[i]" 
+                    CurrentValue="ViewModel.CurrentValues[i]" />
             }
         </div>
 
         <h5>Move:</h5>
         <div>
             <label>From: </label>
-            <input type="number" @bind="GameViewModel.Sender"/>
+            <input type="number" @bind="ViewModel.Sender"/>
 
             <label> To: </label>
-            <input type="number" @bind="GameViewModel.Receiver"/>
+            <input type="number" @bind="ViewModel.Receiver"/>
         </div>
 
         <div style="display: flex; flex-direction: row; gap: 10px; margin: 20px 0">
-            <button @onclick="Pour">Pour</button>
-            <button @onclick="SuggestMove">Suggest Move</button>
-            <button @onclick="GetSolution">Display Solution</button>
+            <button @onclick="ViewModel.Pour">Pour</button>
+            <button @onclick="ViewModel.SuggestMove">Suggest Move</button>
         </div>
-
-        @foreach (var move in GameViewModel.SolutionMoves) {
-            <h6>@move.From => @move.To</h6>
-        }
     </div> 
 </div>
 
-@if (GameViewModel.ShowVictoryPopup) {
+@if (ViewModel.ShowVictoryPopup) {
     <div class="popup-overlay">
         <div class="popup-box">
             <h2>You Win!</h2>
             <p>Congratulations! 🎉</p>
-            <button @onclick="HideVictoryPopup">Close</button>
+            <button @onclick="ViewModel.HideVictoryPopup">Close</button>
         </div>
     </div>
 }
@@ -92,38 +124,5 @@
 </body> *@
 
 @code {
-    protected override void OnInitialized() {
-        SetupViewModel.SetupChanged += OnSetupChanged;
-        GameViewModel.Vessels = new List<Vessel>(SetupViewModel.Vessels);
-        GameViewModel.GeneratePuzzle(SetupViewModel.Vessels, SetupViewModel.Goal);
-    }
 
-    private void OnSetupChanged() {
-        GameViewModel.Vessels = new List<Vessel>(SetupViewModel.Vessels);
-        GameViewModel.GeneratePuzzle(SetupViewModel.Vessels, SetupViewModel.Goal);
-        if (GameViewModel.SolutionMoves.Count > 0) {
-            GameViewModel.ShowSolution();
-        }
-        StateHasChanged();
-    }
-
-    private void Pour() {
-        GameViewModel.Pour();
-
-        if (GameViewModel.SolutionMoves.Count > 0) { //TODO: use a bool to show/hide solution, this will allow list to reappear if player moves off goal node
-            GetSolution();             
-        }
-    }
-
-    private void SuggestMove() {
-        GameViewModel.SuggestMove();
-    }
-
-    private void GetSolution() {
-        GameViewModel.ShowSolution();
-    }
-
-    private void HideVictoryPopup() {
-        GameViewModel.ShowVictoryPopup = false;
-    }
 }

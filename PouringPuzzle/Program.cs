@@ -8,13 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// Pouring Puzzle services
-builder.Services.AddScoped<IPuzzleGeneratorService, PuzzleGeneratorService>();
-builder.Services.AddScoped<IPuzzleSolverService, PuzzleSolverService>();
+// My additions
 
-// ViewModels
+builder.Services.AddScoped<PouringPuzzleService>();
+
 builder.Services.AddScoped<PuzzleViewModel>();
-builder.Services.AddScoped<PuzzleSetupViewModel>();
+
+// End my additions
 
 if (!builder.Environment.IsDevelopment()) {
     builder.WebHost.UseUrls("http://0.0.0.0:5000");

@@ -7,7 +7,7 @@
     <div style="
         position: relative;
         width: 50px;
-        height: @(VesselModel.Max * 10)px;
+        height: @(MaxValue * 10)px;
         background-color: lightgray;
         border-left: 2px solid #444;
         border-right: 2px solid #444;
@@ -22,17 +22,19 @@
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: @((double)VesselModel.Value / VesselModel.Max * 100)%;
+            height: @((double)CurrentValue / MaxValue * 100)%;
             background-color: royalblue;
             transition: height 0.5s ease;">
         </div>
     </div>
 
     <!-- Text -->
-    <div>@($"{VesselModel.Value} / {VesselModel.Max}")</div>
+    <div>@($"{CurrentValue} / {MaxValue}")</div>
 </div>
 
 @code {
     [Parameter]
-    public Vessel VesselModel { get; set; } = new Vessel();
+    public int MaxValue { get; set; } = 1;
+    [Parameter]
+    public int CurrentValue { get; set; } = 0;
 }
