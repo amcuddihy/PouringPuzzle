@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\" />
+    <None Include="wwwroot\images\Kitchen Sink By Tecknojock.png" />
   </ItemGroup>
 
 </Project>

@@ -40,9 +40,9 @@
                 <div>
                     <label>Vessel | </label>
                     <label>Size: </label>
-                    <input type="number" @bind="ViewModel.MaxValues[index]" />
+                    <input type="number" @bind="ViewModel.Vessels[index].MaxValue" />
                     <label>Start: </label>
-                    <input type="number" @bind="ViewModel.StartingValues[index]" />
+                    <input type="number" @bind="ViewModel.Vessels[index].StartingValue" />
                 </div>
             }
         }
@@ -90,8 +90,9 @@
             @for (int i = 0; i < ViewModel.VesselCount; i++)
             {
                 <VesselComponent 
-                    MaxValue="ViewModel.MaxValues[i]" 
-                    CurrentValue="ViewModel.CurrentValues[i]" />
+                    MaxValue="ViewModel.Vessels[i].MaxValue" 
+                    CurrentValue="ViewModel.CurrentNode.VesselValues[i]" 
+                    IsSink="@(i == 0 && ViewModel.UseTapAndDrain)"/>
             }
         </div>
 

@@ -1,4 +1,5 @@
-﻿namespace PouringPuzzle.Models;
+﻿
+namespace PouringPuzzle.Models;
 
 public class PuzzleGame 
 {
