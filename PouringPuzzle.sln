@@ -5,6 +5,8 @@ VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PouringPuzzle", "PouringPuzzle\PouringPuzzle.csproj", "{019E2CAC-16B1-4EAB-B7C0-B58AA3289E66}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PouringPuzzle.Core", "PouringPuzzle.Core\PouringPuzzle.Core.csproj", "{B4A825B3-4E69-441A-A55C-6D6FF5D788A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,14 @@ Global
 		{019E2CAC-16B1-4EAB-B7C0-B58AA3289E66}.Release|Any CPU.Build.0 = Release|Any CPU
 		{019E2CAC-16B1-4EAB-B7C0-B58AA3289E66}.Release|ARM32.ActiveCfg = Release|ARM32
 		{019E2CAC-16B1-4EAB-B7C0-B58AA3289E66}.Release|ARM32.Build.0 = Release|ARM32
+		{B4A825B3-4E69-441A-A55C-6D6FF5D788A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4A825B3-4E69-441A-A55C-6D6FF5D788A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4A825B3-4E69-441A-A55C-6D6FF5D788A5}.Debug|ARM32.ActiveCfg = Debug|Any CPU
+		{B4A825B3-4E69-441A-A55C-6D6FF5D788A5}.Debug|ARM32.Build.0 = Debug|Any CPU
+		{B4A825B3-4E69-441A-A55C-6D6FF5D788A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4A825B3-4E69-441A-A55C-6D6FF5D788A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4A825B3-4E69-441A-A55C-6D6FF5D788A5}.Release|ARM32.ActiveCfg = Release|Any CPU
+		{B4A825B3-4E69-441A-A55C-6D6FF5D788A5}.Release|ARM32.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

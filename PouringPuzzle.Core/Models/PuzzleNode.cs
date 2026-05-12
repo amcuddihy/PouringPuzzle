@@ -1,4 +1,4 @@
-﻿namespace PouringPuzzle.Models;
+﻿namespace PouringPuzzle.Core.Models;
 
 public class PuzzleNode 
 {

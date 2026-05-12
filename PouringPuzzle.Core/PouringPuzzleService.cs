@@ -1,6 +1,6 @@
-﻿using PouringPuzzle.Models;
+﻿using PouringPuzzle.Core.Models;
 
-namespace PouringPuzzle.Services;
+namespace PouringPuzzle.Core;
 
 public class PouringPuzzleService 
 {
