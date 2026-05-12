@@ -18,4 +18,8 @@
     <None Include="wwwroot\images\Kitchen Sink By Tecknojock.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PouringPuzzle.Core\PouringPuzzle.Core.csproj" />
+  </ItemGroup>
+
 </Project>

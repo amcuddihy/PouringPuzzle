@@ -1,5 +1,5 @@
-﻿using PouringPuzzle.Models;
-using PouringPuzzle.Services;
+﻿using PouringPuzzle.Core;
+using PouringPuzzle.Core.Models;
 
 namespace PouringPuzzle.ViewModels; 
 
